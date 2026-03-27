@@ -1,0 +1,361 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── ServiceNow 2025 Exact Brand Colors (extracted from devtools) ── */
+
+  /* Core backgrounds */
+  --sn-navy:          #032d42;       /* primary dark bg */
+  --sn-navy-80:       #032d42cc;     /* 80% opacity overlay */
+  --sn-navy-64:       #032d6240;     /* 64% opacity panels */
+  --sn-navy-dark:     #000000;       /* pure black sections */
+  --sn-navy-mid:      #1d1d1d;       /* dark card bg */
+  --sn-black-30:      #0000004d;     /* 30% black overlay */
+
+  /* Accent — SN teal/cyan green */
+  --sn-teal:          #63d4e0;       /* primary teal accent */
+  --sn-green:         #62d84e;       /* bright green CTA */
+  --sn-purple:        #6301eb;       /* secondary purple accent */
+  --sn-purple-dark:   #6301ebdc;     /* purple with opacity */
+
+  /* Navy blue (secondary) */
+  --sn-blue:          #124d9b;       /* deep blue accent */
+
+  /* Backgrounds */
+  --bg-primary:       #032d42;       /* main page background */
+  --bg-secondary:     #032d6240;     /* section alternate */
+  --bg-card:          #1d1d1d;       /* card background */
+  --bg-light:         #ffffff;       /* light sections */
+  --bg-off-white:     #ebebeb;       /* off-white panels */
+
+  /* Text */
+  --text-primary:     #ffffff;
+  --text-secondary:   #d7e0e6;
+  --text-muted:       #517285;
+  --text-dark:        #032d42;
+  --text-on-light:    #000000;
+
+  /* Borders */
+  --border:           #1d1d1d;
+  --border-light:     #eeeeee;
+  --border-teal:      #63d4e0;
+  --border-green:     #62d84e;
+  --border-purple:    #6301eb;
+
+  /* Accents (mapped for component compatibility) */
+  --accent-blue:      #63d4e0;
+  --accent-purple:    #6301eb;
+  --accent-cyan:      #63d4e0;
+  --accent-green:     #62d84e;
+  --accent-amber:     #f59e0b;
+
+  /* Glows */
+  --glow-teal:        rgba(99, 212, 224, 0.15);
+  --glow-green:       rgba(42, 254, 5, 0.982);
+  --glow-purple:      rgba(99, 1, 235, 0.15);
+  --glow-blue:        rgba(99, 212, 224, 0.12);
+}
+
+/* ── Reset ──────────────────────────────────────────── */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Subtle noise — SN dark site uses very faint grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+}
+
+/* ── Scrollbar ──────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--sn-navy); }
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 212, 224, 0.35);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 212, 224, 0.6);
+}
+
+/* ── Selection ──────────────────────────────────────── */
+
+::selection {
+  background: rgba(99, 212, 224, 0.25);
+  color: #ffffff;
+}
+
+/* ── Card utilities ─────────────────────────────────── */
+
+/* Dark glass card — used in most sections */
+.glass {
+  background: rgba(3, 45, 66, 0.6);
+  border: 1px solid rgba(99, 212, 224, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-hover {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.glass-hover:hover {
+  border-color: rgba(99, 212, 224, 0.4);
+  box-shadow: 0 0 32px rgba(99, 212, 224, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ── Gradient text ──────────────────────────────────── */
+
+/* Hero — white to teal */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #63d4e0 50%, #62d84e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Teal to green — SN's signature infinity loop gradient direction */
+.gradient-text-teal {
+  background: linear-gradient(135deg, #63d4e0 0%, #62d84e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Purple to teal — secondary SN gradient */
+.gradient-text-purple {
+  background: linear-gradient(135deg, #6301eb 0%, #63d4e0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Legacy alias — keeps existing components working */
+.gradient-text-blue {
+  background: linear-gradient(135deg, #63d4e0 0%, #62d84e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Ambient glows ──────────────────────────────────── */
+
+.ambient-blue {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 212, 224, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.ambient-purple {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 1, 235, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.ambient-green {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(98, 216, 78, 0.07) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+/* ── Section divider ─────────────────────────────────── */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99, 212, 224, 0.2),
+    transparent
+  );
+}
+
+/* ── Animated gradient border — SN teal/purple/green ── */
+
+@keyframes borderRotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    #63d4e0,
+    #6301eb,
+    #62d84e,
+    #63d4e0
+  );
+  background-size: 300% 300%;
+  animation: borderRotate 4s ease infinite;
+  z-index: -1;
+}
+
+/* ── Timeline connector ──────────────────────────────── */
+
+.timeline-line {
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    #63d4e0,
+    #6301eb,
+    transparent
+  );
+}
+
+/* ── Skill chip ──────────────────────────────────────── */
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  background: rgba(99, 212, 224, 0.06);
+  border: 1px solid rgba(99, 212, 224, 0.18);
+  color: #d7e0e6;
+  transition: all 0.2s ease;
+}
+
+.skill-chip:hover {
+  background: rgba(99, 212, 224, 0.14);
+  border-color: rgba(99, 212, 224, 0.45);
+  color: #63d4e0;
+}
+
+/* ── Section background helpers ─────────────────────── */
+
+.section-dark {
+  background-color: var(--sn-navy);
+}
+
+.section-darker {
+  background-color: #021f2f;
+}
+
+.section-card {
+  background-color: var(--bg-card);
+}
+
+.section-light {
+  background-color: var(--bg-light);
+  color: var(--text-on-light);
+}
+
+/* ── Pulse dot ───────────────────────────────────────── */
+
+@keyframes pulseRing {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sn-green);
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--sn-green);
+  animation: pulseRing 2s ease-out infinite;
+}
+
+/* ── SN-style accent rule ────────────────────────────── */
+
+.sn-rule {
+  height: 3px;
+  width: 40px;
+  background: linear-gradient(90deg, #63d4e0, #62d84e);
+  border-radius: 2px;
+  margin-top: 12px;
+}
+
+/* ── Card glow variants ──────────────────────────────── */
+
+.card-glow-teal:hover {
+  border-color: rgba(99, 212, 224, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(99, 212, 224, 0.1) !important;
+}
+
+.card-glow-green:hover {
+  border-color: rgba(98, 216, 78, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(98, 216, 78, 0.1) !important;
+}
+
+.card-glow-purple:hover {
+  border-color: rgba(99, 1, 235, 0.45) !important;
+  box-shadow: 0 8px 32px rgba(99, 1, 235, 0.12) !important;
+}
